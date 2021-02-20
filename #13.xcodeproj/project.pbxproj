@@ -18,6 +18,8 @@
 		DED2575825DD322D0029FF53 /* video3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DED2575725DD322D0029FF53 /* video3.mp4 */; };
 		DED2575D25DD41AD0029FF53 /* audio1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DED2575C25DD41AD0029FF53 /* audio1.mp3 */; };
 		DED2576025DD41BA0029FF53 /* audio2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DED2575F25DD41BA0029FF53 /* audio2.mp3 */; };
+		DED2576425DE55D30029FF53 /* AssetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2576325DE55D30029FF53 /* AssetStore.swift */; };
+		DED2576B25DE94F40029FF53 /* VideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2576A25DE94F40029FF53 /* VideoManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		DED2575725DD322D0029FF53 /* video3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video3.mp4; sourceTree = "<group>"; };
 		DED2575C25DD41AD0029FF53 /* audio1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio1.mp3; sourceTree = "<group>"; };
 		DED2575F25DD41BA0029FF53 /* audio2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio2.mp3; sourceTree = "<group>"; };
+		DED2576325DE55D30029FF53 /* AssetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStore.swift; sourceTree = "<group>"; };
+		DED2576A25DE94F40029FF53 /* VideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,7 @@
 				DED2573C25DD31850029FF53 /* AppDelegate.swift */,
 				DED2573E25DD31850029FF53 /* SceneDelegate.swift */,
 				DED2574025DD31850029FF53 /* ViewController.swift */,
+				DED2576E25DE95FA0029FF53 /* Model */,
 				DED2574225DD31850029FF53 /* Main.storyboard */,
 				DED2574525DD31880029FF53 /* Assets.xcassets */,
 				DED2575A25DD32370029FF53 /* media */,
@@ -88,6 +93,15 @@
 				DED2575425DD32260029FF53 /* video2.mp4 */,
 			);
 			path = media;
+			sourceTree = "<group>";
+		};
+		DED2576E25DE95FA0029FF53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DED2576325DE55D30029FF53 /* AssetStore.swift */,
+				DED2576A25DE94F40029FF53 /* VideoManager.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +179,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DED2576425DE55D30029FF53 /* AssetStore.swift in Sources */,
+				DED2576B25DE94F40029FF53 /* VideoManager.swift in Sources */,
 				DED2574125DD31850029FF53 /* ViewController.swift in Sources */,
 				DED2573D25DD31850029FF53 /* AppDelegate.swift in Sources */,
 				DED2573F25DD31850029FF53 /* SceneDelegate.swift in Sources */,
