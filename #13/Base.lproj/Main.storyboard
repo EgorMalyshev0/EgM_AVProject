@@ -21,8 +21,11 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRY-wR-MyM">
                                         <rect key="frame" x="0.0" y="0.0" width="130" height="34"/>
-                                        <state key="normal" title=" PLAY VIDEO">
+                                        <state key="normal" title="PLAY VIDEO">
                                             <color key="titleColor" systemColor="systemRedColor"/>
+                                        </state>
+                                        <state key="highlighted" title="PLAY VIDEO">
+                                            <color key="titleColor" red="1" green="0.74628305439999998" blue="0.72467333079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="startPlaying:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4f7-St-bsZ"/>
@@ -33,6 +36,9 @@
                                         <state key="normal" title=" EXPORT VIDEO">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                         </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="1" green="0.74628305439999998" blue="0.72467333079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="exportVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="st5-ox-pCi"/>
                                         </connections>
@@ -40,13 +46,13 @@
                                 </subviews>
                             </stackView>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nEs-wB-QUb">
-                                <rect key="frame" x="149" y="491" width="116" height="20"/>
+                                <rect key="frame" x="142" y="491" width="130.5" height="20"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tez-GZ-D0U">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                     </activityIndicatorView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preparing file..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ih-aG-Jjo">
-                                        <rect key="frame" x="24" y="0.0" width="92" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preparing video..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ih-aG-Jjo">
+                                        <rect key="frame" x="24" y="0.0" width="106.5" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>

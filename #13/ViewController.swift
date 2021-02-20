@@ -25,7 +25,9 @@ class ViewController: UIViewController {
         manager.merge { (url) in
             self.stackView.isHidden = true
             self.activityIndicator.stopAnimating()
-            self.showVideo(url)
+            if let url = url {
+                self.showVideo(url)
+            }
         }
     }
     
