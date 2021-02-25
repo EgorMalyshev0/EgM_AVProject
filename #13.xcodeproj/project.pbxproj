@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE7077EC25E6789800FEE08C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7077EB25E6789800FEE08C /* CameraViewController.swift */; };
+		DE7077EF25E68AD200FEE08C /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7077EE25E68AD200FEE08C /* CameraController.swift */; };
 		DED2573D25DD31850029FF53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2573C25DD31850029FF53 /* AppDelegate.swift */; };
 		DED2573F25DD31850029FF53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2573E25DD31850029FF53 /* SceneDelegate.swift */; };
 		DED2574125DD31850029FF53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2574025DD31850029FF53 /* ViewController.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE7077EB25E6789800FEE08C /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		DE7077EE25E68AD200FEE08C /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		DED2573925DD31850029FF53 /* #13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "#13.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DED2573C25DD31850029FF53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DED2573E25DD31850029FF53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 				DED2573C25DD31850029FF53 /* AppDelegate.swift */,
 				DED2573E25DD31850029FF53 /* SceneDelegate.swift */,
 				DED2574025DD31850029FF53 /* ViewController.swift */,
+				DE7077EB25E6789800FEE08C /* CameraViewController.swift */,
 				DED2576E25DE95FA0029FF53 /* Model */,
 				DED2574225DD31850029FF53 /* Main.storyboard */,
 				DED2574525DD31880029FF53 /* Assets.xcassets */,
@@ -100,6 +105,7 @@
 			children = (
 				DED2576325DE55D30029FF53 /* AssetStore.swift */,
 				DED2576A25DE94F40029FF53 /* VideoManager.swift */,
+				DE7077EE25E68AD200FEE08C /* CameraController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,9 +187,11 @@
 			files = (
 				DED2576425DE55D30029FF53 /* AssetStore.swift in Sources */,
 				DED2576B25DE94F40029FF53 /* VideoManager.swift in Sources */,
+				DE7077EF25E68AD200FEE08C /* CameraController.swift in Sources */,
 				DED2574125DD31850029FF53 /* ViewController.swift in Sources */,
 				DED2573D25DD31850029FF53 /* AppDelegate.swift in Sources */,
 				DED2573F25DD31850029FF53 /* SceneDelegate.swift in Sources */,
+				DE7077EC25E6789800FEE08C /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

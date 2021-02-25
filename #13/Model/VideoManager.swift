@@ -48,73 +48,84 @@ class VideoManager {
         try? audioTrack1.insertTimeRange(CMTimeRange(start: .zero, duration: video1.duration + video2.duration - transitionDuration), of: assetAudioTrack1, at: .zero)
         try? audioTrack2.insertTimeRange(CMTimeRange(start: .zero, duration: video3.duration - transitionDuration), of: assetAudioTrack2, at: video3InsertTime + transitionDuration)
         
-        let layerInstruction1 = layerInstructionForTrack(track: videoTrack1, asset: video1, standardSize: outputSize, atTime: .zero)
+        let layerInstruction1 = layerInstructionForTrack(track: videoTrack1, asset: video1, atTime: .zero)
         layerInstruction1.setTransformRamp(fromStart: assetTrack1.preferredTransform, toEnd: CGAffineTransform(translationX: outputSize.width, y: 0), timeRange: CMTimeRange(start: video2InsertTime, duration: transitionDuration))
         layerInstructions.append(layerInstruction1)
         
-        let layerInstruction2 = layerInstructionForTrack(track: videoTrack2, asset: video2, standardSize: outputSize, atTime: video2InsertTime)
+        let layerInstruction2 = layerInstructionForTrack(track: videoTrack2, asset: video2, atTime: video2InsertTime)
         layerInstruction2.setTransformRamp(fromStart: CGAffineTransform(translationX: -outputSize.width, y: 0), toEnd: assetTrack2.preferredTransform, timeRange: CMTimeRange(start: video2InsertTime, duration: transitionDuration))
         layerInstruction2.setOpacityRamp(fromStartOpacity: 1, toEndOpacity: 0, timeRange: CMTimeRange(start: video3InsertTime, duration: transitionDuration))
         layerInstructions.append(layerInstruction2)
         
-        let layerInstruction3 = layerInstructionForTrack(track: videoTrack3, asset: video3, standardSize: outputSize, atTime: video3InsertTime)
+        let layerInstruction3 = layerInstructionForTrack(track: videoTrack3, asset: video3, atTime: video3InsertTime)
         let startTransform = CGAffineTransform(translationX: outputSize.width / 2, y: outputSize.height / 2).scaledBy(x: 0.001, y: 0.001)
         layerInstruction3.setTransformRamp(fromStart: startTransform, toEnd: assetTrack3.preferredTransform, timeRange: CMTimeRange(start: video3InsertTime, duration: transitionDuration))
         layerInstructions.append(layerInstruction3)
         
         let mainInstruction = AVMutableVideoCompositionInstruction()
-        mainInstruction.backgroundColor = UIColor.clear.cgColor
-        mainInstruction.timeRange = CMTimeRangeMake(start: .zero, duration: video1.duration + video2.duration + video3.duration - transitionDuration - transitionDuration)
+        mainInstruction.timeRange = CMTimeRangeMake(start: .zero, duration: composition.duration)
         mainInstruction.layerInstructions = layerInstructions
         
         let videoComposition = AVMutableVideoComposition()
-        videoComposition.instructions = [mainInstruction]
         videoComposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
         videoComposition.renderSize = outputSize
+        videoComposition.instructions = [mainInstruction]
+
+//        let videoLayer = CALayer()
+//        videoLayer.frame = CGRect(origin: .zero, size: outputSize)
+//        let overlayLayer = CALayer()
+//        overlayLayer.frame = CGRect(origin: .zero, size: outputSize)
+//        addAnimation(toLayer: overlayLayer, duration: composition.duration)
+//        let outputLayer = CALayer()
+//        outputLayer.frame = CGRect(origin: .zero, size: outputSize)
+//        outputLayer.addSublayer(videoLayer)
+//        outputLayer.addSublayer(overlayLayer)
+
         
+//        videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer,
+//                                                                             in: outputLayer)
+
         completion(composition, videoComposition)
     }
     
-    func merge(completion: @escaping (URL?) -> Void) {
+    func testMerge(completion: @escaping (URL?) -> Void) {
         DispatchQueue.global().async {
             self.doMerge { (composition, videoComposition) in
-                let exporter = AVAssetExportSession.init(asset: composition, presetName: AVAssetExportPresetHighestQuality)
-                let path = NSTemporaryDirectory().appending("mergedVideo.mp4")
-                let exportURL = URL.init(fileURLWithPath: path)
+                guard let exporter = AVAssetExportSession(
+                  asset: composition,
+                  presetName: AVAssetExportPresetHighestQuality)
+                  else {
+                    print("Cannot create export session.")
+                    completion(nil)
+                    return
+                }
+                let videoName = "mergedVideo"
+                let exportURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(videoName).appendingPathExtension("mov")
+                
+                exporter.videoComposition = videoComposition
+                exporter.outputFileType = .mov
+                exporter.outputURL = exportURL
                 
                 try? FileManager.default.removeItem(at: exportURL)
-                
-                exporter?.outputURL = exportURL
-                exporter?.outputFileType = AVFileType.mp4
-                exporter?.shouldOptimizeForNetworkUse = true
-                exporter?.videoComposition = videoComposition
-                exporter?.exportAsynchronously(completionHandler: {
-                    DispatchQueue.main.async {
-                        self.exportDidFinish(exporter: exporter, videoURL: exportURL, completion: completion)
+
+                exporter.exportAsynchronously {
+                  DispatchQueue.main.async {
+                    switch exporter.status {
+                    case .completed:
+                      completion(exportURL)
+                    default:
+                      print("Something went wrong during export.")
+                      print(exporter.error ?? "unknown error")
+                      completion(nil)
+                      break
                     }
-                })
+                  }
+                }
             }
         }
     }
     
-    fileprivate func orientationFromTransform(transform: CGAffineTransform) -> (orientation: UIImage.Orientation, isPortrait: Bool) {
-        var assetOrientation = UIImage.Orientation.up
-        var isPortrait = false
-        if transform.a == 0 && transform.b == 1.0 && transform.c == -1.0 && transform.d == 0 {
-            assetOrientation = .right
-            isPortrait = true
-        } else if transform.a == 0 && transform.b == -1.0 && transform.c == 1.0 && transform.d == 0 {
-            assetOrientation = .left
-            isPortrait = true
-        } else if transform.a == 1.0 && transform.b == 0 && transform.c == 0 && transform.d == 1.0 {
-            assetOrientation = .up
-        } else if transform.a == -1.0 && transform.b == 0 && transform.c == 0 && transform.d == -1.0 {
-            assetOrientation = .down
-        }
-        return (assetOrientation, isPortrait)
-    }
-    
-    fileprivate func layerInstructionForTrack(track: AVCompositionTrack, asset: AVAsset, standardSize:CGSize, atTime: CMTime) -> AVMutableVideoCompositionLayerInstruction {
+    fileprivate func layerInstructionForTrack(track: AVCompositionTrack, asset: AVAsset, atTime: CMTime) -> AVMutableVideoCompositionLayerInstruction {
         let instruction = AVMutableVideoCompositionLayerInstruction(assetTrack: track)
         let assetTrack = asset.tracks(withMediaType: AVMediaType.video)[0]
         
@@ -123,13 +134,21 @@ class VideoManager {
         return instruction
     }
     
-    fileprivate func exportDidFinish(exporter:AVAssetExportSession?, videoURL: URL, completion: @escaping (URL?) -> Void) -> Void {
-        if exporter?.status == AVAssetExportSession.Status.completed {
-            completion(videoURL)
-        }
-        else if exporter?.status == AVAssetExportSession.Status.failed {
-            completion(nil)
-            print("Failed to export video")
-        }
+    fileprivate func addAnimation(toLayer overlayLayer: CALayer, duration: CMTime){
+        let origin = overlayLayer.frame.origin
+        let size = CGSize(width: 200, height: 200)
+        let circle = UIView(frame: CGRect(x: origin.x + size.width / 2, y: origin.y + size.height / 2, width: size.width, height: size.height))
+        circle.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        circle.layer.cornerRadius = size.height / 2
+        let circleLayer = CALayer()
+        circleLayer.contents = circle
+        overlayLayer.addSublayer(circleLayer)
+        let animation = CABasicAnimation(keyPath: "transform.translation")
+        animation.fromValue = CGAffineTransform.identity
+        animation.toValue = CGAffineTransform(translationX: outputSize.width - size.width, y: outputSize.height - size.height)
+        animation.duration = Double(CMTimeGetSeconds(duration))
+        animation.beginTime = AVCoreAnimationBeginTimeAtZero
+        animation.isRemovedOnCompletion = false
+        circleLayer.add(animation, forKey: "transform.translation")
     }
 }

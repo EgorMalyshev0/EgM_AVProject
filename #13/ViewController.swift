@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     @IBAction func startPlaying(_ sender: Any) {
         activityIndicator.startAnimating()
         stackView.isHidden = false
-        manager.merge { (url) in
+        manager.testMerge { (url) in
             self.stackView.isHidden = true
             self.activityIndicator.stopAnimating()
             if let url = url {
