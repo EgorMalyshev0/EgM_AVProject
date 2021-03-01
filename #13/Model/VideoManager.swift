@@ -71,20 +71,18 @@ class VideoManager {
         videoComposition.renderSize = outputSize
         videoComposition.instructions = [mainInstruction]
 
-//        let videoLayer = CALayer()
-//        videoLayer.frame = CGRect(origin: .zero, size: outputSize)
-//        let overlayLayer = CALayer()
-//        overlayLayer.frame = CGRect(origin: .zero, size: outputSize)
-//        addAnimation(toLayer: overlayLayer, duration: composition.duration)
-//        let outputLayer = CALayer()
-//        outputLayer.frame = CGRect(origin: .zero, size: outputSize)
-//        outputLayer.addSublayer(videoLayer)
-//        outputLayer.addSublayer(overlayLayer)
+        let videoLayer = CALayer()
+        videoLayer.frame = CGRect(origin: .zero, size: outputSize)
+        let overlayLayer = CALayer()
+        overlayLayer.frame = CGRect(origin: .zero, size: outputSize)
+        addAnimation(toLayer: overlayLayer, duration: composition.duration)
+        let outputLayer = CALayer()
+        outputLayer.frame = CGRect(origin: .zero, size: outputSize)
+        outputLayer.addSublayer(videoLayer)
+        outputLayer.addSublayer(overlayLayer)
 
-        
-//        videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer,
-//                                                                             in: outputLayer)
-
+        videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer,
+                                                                             in: outputLayer)
         completion(composition, videoComposition)
     }
     
@@ -135,20 +133,25 @@ class VideoManager {
     }
     
     fileprivate func addAnimation(toLayer overlayLayer: CALayer, duration: CMTime){
-        let origin = overlayLayer.frame.origin
-        let size = CGSize(width: 200, height: 200)
-        let circle = UIView(frame: CGRect(x: origin.x + size.width / 2, y: origin.y + size.height / 2, width: size.width, height: size.height))
-        circle.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        circle.layer.cornerRadius = size.height / 2
+        let size = CGSize(width: 100, height: 100)
+        let origin = CGPoint(x: overlayLayer.frame.minX, y: overlayLayer.frame.maxY - size.height)
+        let circle = UIImage(systemName: "circle.fill")?.withTintColor(.white)
         let circleLayer = CALayer()
-        circleLayer.contents = circle
+        circleLayer.frame = CGRect(origin: origin, size: size)
+        let maskLayer = CALayer()
+        maskLayer.frame = circleLayer.bounds
+        maskLayer.contents = circle?.cgImage
+        circleLayer.mask = maskLayer
+        circleLayer.backgroundColor = UIColor.white.cgColor
+        circleLayer.opacity = 0.5
         overlayLayer.addSublayer(circleLayer)
-        let animation = CABasicAnimation(keyPath: "transform.translation")
-        animation.fromValue = CGAffineTransform.identity
-        animation.toValue = CGAffineTransform(translationX: outputSize.width - size.width, y: outputSize.height - size.height)
+        let startPosition = circleLayer.position
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.fromValue = startPosition
+        animation.toValue = CGPoint(x: overlayLayer.frame.maxX - size.width / 2, y: overlayLayer.frame.minY + size.height / 2)
         animation.duration = Double(CMTimeGetSeconds(duration))
         animation.beginTime = AVCoreAnimationBeginTimeAtZero
-        animation.isRemovedOnCompletion = false
-        circleLayer.add(animation, forKey: "transform.translation")
+        animation.isRemovedOnCompletion = true
+        circleLayer.add(animation, forKey: "position")
     }
 }

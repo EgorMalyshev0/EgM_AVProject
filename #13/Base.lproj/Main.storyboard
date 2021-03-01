@@ -25,6 +25,9 @@
                                         <state key="normal" title="PLAY VIDEO">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                         </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="1" green="0.74628305439999998" blue="0.72467333079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <state key="highlighted" title="PLAY VIDEO">
                                             <color key="titleColor" red="1" green="0.74628305439999998" blue="0.72467333079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -36,6 +39,9 @@
                                         <rect key="frame" x="0.0" y="42" width="130" height="34"/>
                                         <state key="normal" title=" EXPORT VIDEO">
                                             <color key="titleColor" systemColor="systemRedColor"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="1" green="0.74628305439999998" blue="0.72467333079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="highlighted">
                                             <color key="titleColor" red="1" green="0.74628305439999998" blue="0.72467333079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -74,6 +80,8 @@
                     <tabBarItem key="tabBarItem" title="Exporting" image="square.and.arrow.up.fill" catalog="system" id="pBi-Tp-Q9i"/>
                     <connections>
                         <outlet property="activityIndicator" destination="tez-GZ-D0U" id="bfI-Yv-Eb1"/>
+                        <outlet property="exportButton" destination="GOl-eV-Faw" id="D86-HH-Dbg"/>
+                        <outlet property="playButton" destination="GRY-wR-MyM" id="75c-JX-tZF"/>
                         <outlet property="stackView" destination="nEs-wB-QUb" id="HQ6-Z8-Weu"/>
                     </connections>
                 </viewController>
@@ -99,10 +107,11 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="138" height="60"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wr3-l2-See">
-                                                        <rect key="frame" x="54" y="19" width="30.5" height="22.5"/>
-                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <rect key="frame" x="51" y="16.5" width="36.5" height="27.5"/>
+                                                        <color key="tintColor" systemColor="systemYellowColor"/>
                                                         <state key="normal">
-                                                            <imageReference key="image" image="camera.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="camera.fill" catalog="system" symbolScale="default"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="default" weight="semibold"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="turnOnPhotoMode:" destination="1t4-Tm-CNM" eventType="touchUpInside" id="hWE-OX-HJE"/>
@@ -119,12 +128,14 @@
                                                 <rect key="frame" x="138" y="0.0" width="138" height="60"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGz-zR-4Cn">
-                                                        <rect key="frame" x="39" y="0.5" width="60" height="59"/>
+                                                        <rect key="frame" x="39" y="0.0" width="60" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="IGz-zR-4Cn" secondAttribute="height" multiplier="1:1" id="Vu9-M6-l6W"/>
                                                         </constraints>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <state key="normal" backgroundImage="circle.fill" catalog="system"/>
+                                                        <state key="normal" image="circle.fill" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="55" scale="default" weight="heavy"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="captureButtonTapped:" destination="1t4-Tm-CNM" eventType="touchUpInside" id="tIV-GZ-Av5"/>
                                                         </connections>
@@ -141,10 +152,11 @@
                                                 <rect key="frame" x="276" y="0.0" width="138" height="60"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYq-p8-XHt">
-                                                        <rect key="frame" x="54" y="19" width="30" height="22"/>
+                                                        <rect key="frame" x="51" y="17" width="36" height="26"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal">
-                                                            <imageReference key="image" image="video.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="video" catalog="system" symbolScale="default"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="default" weight="semibold"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="turnOnVideoMode:" destination="1t4-Tm-CNM" eventType="touchUpInside" id="sqA-xv-gBy"/>
@@ -172,7 +184,7 @@
                                                         <rect key="frame" x="5" y="4" width="30.5" height="22.5"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal">
-                                                            <imageReference key="image" image="camera.rotate.fill" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="arrow.triangle.2.circlepath.camera.fill" catalog="system" symbolScale="large"/>
                                                         </state>
                                                         <connections>
                                                             <action selector="toggleCamera:" destination="1t4-Tm-CNM" eventType="touchUpInside" id="NUf-Jn-fQU"/>
@@ -233,8 +245,12 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Camera" image="camera" catalog="system" id="2Il-IA-sAZ"/>
                     <connections>
+                        <outlet property="captureButton" destination="IGz-zR-4Cn" id="r5q-rB-wl4"/>
                         <outlet property="capturePreviewView" destination="E0w-bJ-Ja6" id="D8p-8r-e24"/>
+                        <outlet property="photoModeButton" destination="Wr3-l2-See" id="Dnw-EM-3dd"/>
+                        <outlet property="toggleCamerasButton" destination="bJJ-cs-eaT" id="psx-lR-huV"/>
                         <outlet property="toggleFlashButton" destination="Q7F-pJ-8SD" id="Jm4-2p-tit"/>
+                        <outlet property="videoModeButton" destination="JYq-p8-XHt" id="5KZ-dC-XRF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1qp-nI-vuT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -247,6 +263,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Kid-QK-CXd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="unO-sX-jT8">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -262,12 +279,12 @@
     </scenes>
     <resources>
         <image name="Flash Off Icon" width="24" height="24"/>
+        <image name="arrow.triangle.2.circlepath.camera.fill" catalog="system" width="128" height="94"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="camera.fill" catalog="system" width="128" height="94"/>
-        <image name="camera.rotate.fill" catalog="system" width="128" height="94"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
-        <image name="video.fill" catalog="system" width="128" height="82"/>
+        <image name="video" catalog="system" width="128" height="83"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -276,6 +293,9 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
